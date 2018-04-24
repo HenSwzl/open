@@ -1,3 +1,9 @@
 <?php
-//截取2个字符串间的字符串
-substr($str, strlen($start_str)+strpos($str, $start_str),(strlen($str) - strpos($str, $end_str))*(-1));
+    class a {
+        function get_str($str, $start, $end) {
+            echo substr($str, strlen($start)+strpos($str, $start),(strlen($str) - strpos($str, $end))*(-1));
+        }
+    }
+    $a = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAkGB';
+    $b = new a();
+    $b->get_str($a, '/', ';');
