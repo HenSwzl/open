@@ -177,8 +177,10 @@
 
 
 
-
-
+        //获取当前时间与得到的时间差
+        var current = new Date().getTime(); //当前时间
+        var newstr = data['time'].replace(/-/g,'/');
+        var times = (current - new Date(newstr).getTime())/1000/60; //分钟
 
 
 
