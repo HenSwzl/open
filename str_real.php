@@ -1,4 +1,5 @@
 <?php
+    //获取base64图片的内容body
     class a {
         function get_str($str, $start, $end) {
             echo substr($str, strlen($start)+strpos($str, $start),(strlen($str) - strpos($str, $end))*(-1));
