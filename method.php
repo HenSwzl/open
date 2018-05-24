@@ -42,6 +42,23 @@ class Method
         imagedestroy($QR);
         echo $value;
     }
+    
+    //删除目录下的文件和目录（不包括本目录）
+    function delDirAndFile( $dirName )
+    {
+        if ( $handle = opendir( $dirName) ) {
+            while ( false !== ( $item = readdir( $handle ) ) ) {
+                if ( $item != "." && $item != ".." ) {
+                    if ( is_dir( "{$dirName}/{$item}" ) ) {
+                        $this->delDirAndFile( "{$dirName}/{$item}" );
+                    } else {
+                        if( unlink( "{$dirName}/{$item}" ) )echo "成功删除文件： {$dirName}/{$item}\n";
+                }
+            }
+        }
+        closedir( $handle );
+        }
+    }
 
 
 }
