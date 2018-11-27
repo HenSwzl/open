@@ -25,8 +25,11 @@
         //设置sheet的name
         $objActSheet->setTitle($sheetname);
         //业务逻辑
-        ...
-        ...
+        //...
+        //...
+        //垂直居中
+        $objActSheet->getStyle("A1:M999")->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objActSheet->getStyle("A1:M999")->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         //输出到客户端
         $write = new PHPExcel_Writer_Excel2007($excel);
         ob_end_clean();
