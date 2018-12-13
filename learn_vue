@@ -1,0 +1,44 @@
+<script src="./vue.js"></script>
+
+<div id="tx">
+    <!--v-bind:val(ps:绑定值到val上，传给组件处理)-->
+    <from-a v-for="item in obj" v-bind:ac="item" v-model="item.value"></from-a>
+    <button @click="submit()">提交</button>
+</div>
+
+<script>
+    //局部组件
+    var FromA = {
+        data: function() {
+            return {
+                inputWidth: '150px',
+                divColor: 'red',
+            }
+        },
+        props: {
+            ac: [Object],
+        },
+        methods: {
+
+        },
+        template: `<span><input :style="{width: inputWidth}" type="text" :id="ac.id+1" @input="$emit('input', $event.target.value)"> <button>{{ac.text}}</button></span>`
+    };
+
+    var tx = new Vue({
+        el: '#tx',
+        components: {
+            'from-a': FromA,
+        },
+        data: {
+            obj: [
+                { id: 0, text: '账号', desc: 'name', value:'' },
+                { id: 1, text: '密码', desc: 'pwd', value:'' },
+            ],
+        },
+        methods: {
+            submit: function () {
+                console.log(this.obj)
+            }
+        }
+    })
+</script>
