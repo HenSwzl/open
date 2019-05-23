@@ -59,6 +59,19 @@ class Method
         closedir( $handle );
         }
     }
+    
+    // 去0
+    function del0($s)
+    {
+        $s = trim(strval($s));
+        if (preg_match('#^-?\d+?\.0+$#', $s)) {
+            return preg_replace('#^(-?\d+?)\.0+$#','$1',$s);
+        }
+        if (preg_match('#^-?\d+?\.[0-9]+?0+$#', $s)) {
+            return preg_replace('#^(-?\d+\.[0-9]+?)0+$#','$1',$s);
+        }
+        return $s;
+    }
 
 
 }
