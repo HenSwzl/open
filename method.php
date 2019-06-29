@@ -72,6 +72,31 @@ class Method
         }
         return $s;
     }
+    
+        //笛卡尔积
+    function cartesian($arr) {
+        $result = array_shift($arr);
+        while ($arr2 = array_shift($arr)) {
+            $arr1 = $result;
+            $result = array();
+            foreach ($arr1 as $v) {
+                foreach ($arr2 as $v2) {
+                    if (!is_array($v)) $v = array($v);
+                    if (!is_array($v2)) $v2 = array($v2);
+                    $result[] = array_merge_recursive($v,$v2);
+                }
+            }
+        }
+        return $result;
+    }
+    
+    //base64图片正则提取
+    function pregBase64($str) {
+        if (!is_string($str)) return [];
+        $preg = '/data:image\/[a-z].*?;base64,([^"]+)"/';
+        preg_match_all($preg, $str, $imgArr);
+        return $imgArr[0];
+    }
 
 
 }
