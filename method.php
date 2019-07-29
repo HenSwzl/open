@@ -1,4 +1,4 @@
-<?php
+/<?php
 
 class Method
 {
@@ -98,5 +98,9 @@ class Method
         return $imgArr[0];
     }
 
+    //放一些网址
+    function setUrl() {
+        $url_1 = "http://pecl.php.net/package/redis";  //redis官网包
+    }
 
 }
