@@ -1,0 +1,8 @@
+// 远程连接mysql失败
+1、mysql配置允许外部访问
+2、防火墙开放端口：
+  linux命令： firewall-cmd --add-port=3306/tcp --permanent
+
+              firewall-cmd --reload
+
+              firewall-cmd --query-port=3306/tcp 
