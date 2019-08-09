@@ -1,2 +1,2 @@
 # open
-This is a open project
+随性记录
