@@ -103,4 +103,42 @@ class Method
         $url_1 = "http://pecl.php.net/package/redis";  //redis官网包
     }
 
+
+    //curl请求
+    function curl_method($url, $data, $header = false, $method = "POST") {
+        //初使化init方法
+        $ch = curl_init();
+        //指定URL
+        curl_setopt($ch,CURLOPT_URL, $url);
+        //设定请求后返回结果
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        switch ($method) {
+            case 'POST':
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode( $data ));
+                break;
+            case 'GET': break;
+            case 'PUT':
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data); //设置请求体，提交数据包
+                break;
+            case 'DELETE':
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                break;
+        }
+        //忽略证书
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        //header头信息
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        //设置超时时间
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        //发送请求
+        $output = curl_exec($ch);
+        //关闭curl
+        curl_close($ch);
+        //返回数据
+        return $output;
+    }
+
 }
