@@ -97,6 +97,11 @@ class Method
         preg_match_all($preg, $str, $imgArr);
         return $imgArr[0];
     }
+    
+    //获取base64图片内容
+    function get_str($str, $start, $end) {
+        echo substr($str, strlen($start)+strpos($str, $start),(strlen($str) - strpos($str, $end))*(-1));
+    }
 
     //放一些网址
     function setUrl() {
