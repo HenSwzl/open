@@ -145,5 +145,39 @@ class Method
         //返回数据
         return $output;
     }
+    
+     /**
+     * @param $header  数据表头
+     * @param $data     数据
+     * @param string $fileName  文件名
+     * @return void
+     * 生成cvs到本地
+     */
+    function csvExport($header, $data, $fileName = '') {
+
+        set_time_limit(0);
+        ini_set('memory_limit', '512M');
+
+        // 如果手动设置表头；则放在第一行
+        if (!is_null($header)) {
+            array_unshift($data, $header);
+        }
+        // 防止没有添加文件后缀
+        $fileName = str_replace('.csv', '', $fileName).'.csv';
+        ob_clean();
+        header( "Content-type:  application/octet-stream ");
+        header( "Accept-Ranges:  bytes ");
+        header( "Content-Disposition:  attachment;  filename=".$fileName);
+        foreach( $data as $k => $v) {
+            // 如果是二维数组；转成一维
+            if (is_array($v)) {
+                $v = implode(',', $v);
+            }
+            // 解决导出的数字会显示成科学计数法的问题
+            $v = str_replace(',', "\t,", $v);
+            // 转成gbk以兼容office乱码的问题
+            echo iconv('UTF-8', 'GBK', $v) . "\t\r\n";
+        }
+    }
 
 }
