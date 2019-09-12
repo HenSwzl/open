@@ -168,7 +168,16 @@ class Method
         header( "Content-type:  application/octet-stream ");
         header( "Accept-Ranges:  bytes ");
         header( "Content-Disposition:  attachment;  filename=".$fileName);
+        $num = 0;
+        $limit = 50000;
         foreach( $data as $k => $v) {
+            $num++;
+            //防止数据过多
+            if ($limit == $num) {
+                ob_flush();
+                flush();
+                $num = 0;
+            }
             // 如果是二维数组；转成一维
             if (is_array($v)) {
                 $v = implode(',', $v);
