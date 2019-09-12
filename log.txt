@@ -1,3 +1,48 @@
-热敏打印机 php + ios-安卓 ： 
-文章地址  https://www.jianshu.com/p/4c6cd7563759
-github地址  https://github.com/mike42/escpos-php
+1、热敏打印机 php + ios-安卓 ： 
+  文章地址  https://www.jianshu.com/p/4c6cd7563759
+  github地址  https://github.com/mike42/escpos-php
+  
+2、使用 fopen('php://output', 'wb') 创建流文件 生成 cvs 数据不会从第一行开始
+
+例子：
+
+function method() {
+
+    set_time_limit(0);
+    ini_set('memory_limit', '512M');
+
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");
+    header('Content-Disposition: attachment;filename="'.$fileName.'.csv"');
+    header('Content-Transfer-Encoding: binary');
+
+    //打开PHP文件句柄,php://output 表示直接输出到浏览器
+    $fp = fopen('php://output', 'wb');// 打开文件资源，不存在则创建
+
+    foreach ($headList as $key => $value) {
+        //CSV的Excel支持GBK编码，一定要转换，否则乱码
+        $headList[$key] = iconv('utf-8', 'gbk', $value);
+    }
+
+    //写入title
+    fputcsv($fp, $headList);
+
+    foreach ($data as $k => $row) {
+        $num++;
+        //刷新一下输出buffer，防止由于数据过多造成问题
+        if ($limit == $num) {
+            ob_flush();
+            flush();
+            $num = 0;
+        }
+
+        foreach ($row as $key => $value) {
+            $row[$key] = iconv('utf-8', 'gbk', $row[$key]);
+        }
+
+        fputcsv($fp, $row);
+    }
+
+    fclose($fp);
+}
