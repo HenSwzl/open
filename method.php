@@ -135,7 +135,7 @@ class Method
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         //header头信息
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        if ($header) curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
         //设置超时时间
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         //发送请求
