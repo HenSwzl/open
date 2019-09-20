@@ -157,11 +157,7 @@ class Method
 
         set_time_limit(0);
         ini_set('memory_limit', '512M');
-
-        // 如果手动设置表头；则放在第一行
-        if (!is_null($header)) {
-            array_unshift($data, $header);
-        }
+        
         // 防止没有添加文件后缀
         $fileName = str_replace('.csv', '', $fileName).'.csv';
         ob_clean();
@@ -170,6 +166,10 @@ class Method
         header( "Content-Disposition:  attachment;  filename=".$fileName);
         $num = 0;
         $limit = 50000;
+        
+        //数据表头
+        if ($header) echo iconv('UTF-8', 'GBK', implode(',', $header) ) . "\t\r\n";
+        
         foreach( $data as $k => $v) {
             $num++;
             //防止数据过多
@@ -178,14 +178,24 @@ class Method
                 flush();
                 $num = 0;
             }
+            
+            $newData = array();
+            if ($header) {
+                foreach ($header as $key => $val) {
+                    //注 null转空字符串是为了打开excel时单元格对上title
+                    if (isset($v[$key])) $newData[$key] = $v[$key]===null ? '' : $v[$key];
+                }
+            } else $newData = $v;
+            
             // 如果是二维数组；转成一维
-            if (is_array($v)) {
-                $v = implode(',', $v);
+            if (is_array($newData)) {
+                $newData = implode(',', $newData);
             }
             // 解决导出的数字会显示成科学计数法的问题
-            $v = str_replace(',', "\t,", $v);
+            $v = str_replace(',', "\t,", $newData);
             // 转成gbk以兼容office乱码的问题
-            echo iconv('UTF-8', 'GBK', $v) . "\t\r\n";
+            //echo iconv('UTF-8', 'GBK', $newData) . "\t\r\n";
+            echo mb_convert_encoding($newData, 'GBK', 'UTF-8') . "\t\r\n";
         }
     }
 
