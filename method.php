@@ -106,6 +106,7 @@ class Method
     //放一些网址
     function setUrl() {
         $url_1 = "http://pecl.php.net/package/redis";  //redis官网包
+        $url_2 = "https://www.bootcdn.cn/";     //css、js外链地址
     }
 
 
