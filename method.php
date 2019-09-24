@@ -184,7 +184,7 @@ class Method
             if ($header) {
                 foreach ($header as $key => $val) {
                     //注 null转空字符串是为了打开excel时单元格对上title
-                    if (isset($v[$key])) $newData[$key] = $v[$key]===null ? '' : $v[$key];
+                    if (array_key_exists($key, $header)) $newData[$key] = $v[$key]===null ? '' : $v[$key];
                 }
             } else $newData = $v;
             
