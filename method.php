@@ -199,5 +199,29 @@ class Method
             echo mb_convert_encoding($newData, 'GBK', 'UTF-8') . "\t\r\n";
         }
     }
+    
+    /**
+    * @param $fileInfo   //上传文件的信息
+    * @param array $allowType  //允许的类型
+    * @return boolean
+    * 获得文件的真实扩展名
+    */
+    function getFileType($fileInfo, $allowType=array('mp3', 'wav')){
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $fileInfo['tmp_name']);
+        $arr = array(
+            'mp3'   =>  array('audio/mpeg'),
+            'wav'   =>  array('audio/x-wav'),
+        );
+        $suffix = explode('.', $fileInfo['name'])[1];
+        $flag = false;
+        foreach ($allowType as $v) {
+            if (isset($arr[$v]) && in_array($mime, $arr[$v]) && in_array($suffix, $allowType)) {
+                $flag = true;
+                break;
+            }
+        }
+        return $flag;
+    }
 
 }
