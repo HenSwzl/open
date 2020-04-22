@@ -228,6 +228,7 @@ class Method
 }
 
 
+
 class ZipX
 {
 
@@ -356,7 +357,7 @@ class ZipX
         }
     }
 
-//删除本地文件目录
+    //删除本地文件目录
     function delDir($dir)
     {
         //先删除目录下的文件：
@@ -373,6 +374,9 @@ class ZipX
         }
         closedir($dh);
     }
+    
 }
+
+
 
 
