@@ -1,0 +1,17 @@
+#decode g729转wav
+ffmpeg -acodec g729 -f g729 -i 1.g729 out.wav
+
+#decode g723转wav
+ffmpeg -acodec g723_1  -f g723_1 -i 1.g723 out.wav
+
+#声道文件合并
+ffmpeg -i XAGRHD1011_20160807095625_013583850777_L.wav -iXAGRHD1011_20160807095625_013583850777_R.wav -filter_complex"amovie=XAGRHD1011_20160807095625_013583850777_L.wav [l];amovie=XAGRHD1011_20160807095625_013583850777_R.wav [r]; [l] [r] amerge"1_2.wav
+
+#双声道变为单声道
+ffmpeg -i XAGRHD1011_20160807095625_013583850777.wav -afvolume=2.000000 -ac 1 out.wav
+
+#采样率转换
+ffmpeg -i XAGRHD1011_20160807095625_013583850777.wav -afvolume=2.000000 -ac 1 out.wav
+
+#操作没有头信息的pcm  pcm转mp3
+ffmpeg -ar 8000 -ac 1 -f adpcm -i test.pcm  -acodec libmp3lame -ac 1 -ab 128k 1.mp3 
